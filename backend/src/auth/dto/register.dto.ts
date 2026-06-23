@@ -1,11 +1,16 @@
-import { IsEmail, MinLength } from 'class-validator';
+import { RolesUser } from '@prisma/client';
+import { IsEmail, MinLength, IsEnum } from 'class-validator';
 
-// Define que datos esperamos en el body de POST /auth/register
-// y las reglas que el ValidationPipe global va a validar automaticamente.
 export class RegisterDto {
   @IsEmail()
-  email: string;
+  email!: string;
 
   @MinLength(6)
-  password: string;
+  password!: string;
+
+  @MinLength(3)
+  nombre!: string;
+
+  @IsEnum(RolesUser)
+  rol!: RolesUser;
 }

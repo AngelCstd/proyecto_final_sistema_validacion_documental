@@ -24,6 +24,7 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+      - /app/uploads
     depends_on:
       postgres:
         condition: service_healthy
@@ -31,7 +32,6 @@ services:
 
   frontend:
     build: ./frontend
-    env_file: ./frontend/.env.local
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:3000
     ports:

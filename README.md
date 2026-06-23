@@ -40,12 +40,13 @@ Sistema de autenticación con backend en NestJS, frontend en Next.js y base de d
 ## Comandos útiles
 
 ```bash
-docker compose down        # apagar todo (los datos de Postgres no persisten entre reinicios)
-docker compose logs -f backend   # ver logs del backend en vivo
-docker compose logs -f frontend  # ver logs del frontend en vivo
+docker compose down -v            # apagar todo y borrar volúmenes (DB y node_modules de los contenedores)
+docker compose logs -f backend    # ver logs del backend en vivo
+docker compose logs -f frontend   # ver logs del frontend en vivo
 ```
 
 ## Notas
 
 - La base de datos de Postgres no usa volumen persistente: cada vez que se recrean los contenedores, se vuelve a migrar y sembrar el usuario de prueba desde cero.
+- `node_modules` de backend y frontend no existen en el repositorio ni en el host: viven únicamente dentro de los contenedores (se generan al construir la imagen). Por eso el comando para apagar es `docker compose down -v` en vez de un `down` simple.
 - Las variables de entorno (`backend/.env`, `frontend/.env.local`) están incluidas en el repositorio para que el sistema funcione con un solo comando, sin pasos de configuración adicionales. No contienen credenciales de producción.

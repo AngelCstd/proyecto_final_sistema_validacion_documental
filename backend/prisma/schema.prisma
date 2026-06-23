@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,12 +6,84 @@ datasource db {
   provider = "postgresql"
 }
 
+enum RolesUser {
+  ADMIN
+  CAPTURISTA
+}
+
+enum StatusDocument {
+  VIGENTE
+  REVOCADO
+  CANCELADO
+}
+
+enum QrPosition {
+  SUPERIOR_DERECHA
+  SUPERIOR_IZQUIERDA
+  INFERIOR_DERECHA
+  INFERIOR_IZQUIERDA
+  ULTIMA_PAGINA_INFERIOR_DERECHA
+}
+
+enum ActionBitacora {
+  CREATE
+  REVOKE
+  CANCEL
+}
+
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
+  id        String     @id @default(uuid())
+  email     String     @unique
+  rol       RolesUser  @default(CAPTURISTA)
+  nombre    String
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  documents Document[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  bitacoras Bitacora[]
 
   @@map("users")
+}
+
+model Document {
+  id              String               @id @default(uuid())
+  folio           String               @unique
+  titulo          String
+  tipo            String
+  areaEmisora     String
+  estado          StatusDocument       @default(VIGENTE)
+  qrPosicion      QrPosition
+  originalPdfPath String
+  qrPdfPath       String
+  qrImagePath     String
+  validations     DocumentValidation[]
+  bitacoras       Bitacora[]
+  createdById     String
+  createdBy       User                 @relation(fields: [createdById], references: [id])
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt
+
+  @@map("documents")
+}
+
+model DocumentValidation {
+  id               String         @id @default(uuid())
+  documentId       String
+  document         Document       @relation(fields: [documentId], references: [id])
+  estadoEnConsulta StatusDocument
+  validatedAt      DateTime       @default(now())
+
+  @@map("document_validations")
+}
+
+model Bitacora {
+  id         String         @id @default(uuid())
+  action     ActionBitacora
+  userId     String
+  user       User           @relation(fields: [userId], references: [id])
+  documentId String?
+  document   Document?      @relation(fields: [documentId], references: [id])
+  createdAt  DateTime       @default(now())
+
+  @@map("bitacora")
 }

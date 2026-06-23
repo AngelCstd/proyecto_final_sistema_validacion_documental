@@ -6,7 +6,7 @@ export default function DashboardPage() {
   return (
     <ProtectedRoute>
       <AuthLayout>
-        <UserSummary />
+        <div className="flex h-full w-full items-start bg-amber-50"></div>
       </AuthLayout>
     </ProtectedRoute>
   );

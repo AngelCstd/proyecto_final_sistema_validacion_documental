@@ -2,3 +2,7 @@ node_modules
 dist
 
 /generated/prisma
+
+# Contenido subido por usuarios, vive solo dentro del volumen del contenedor
+uploads/*
+!uploads/**/.gitkeep
