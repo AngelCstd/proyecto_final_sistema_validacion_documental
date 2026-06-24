@@ -9,8 +9,6 @@ import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
-    // Importamos UsersModule porque AuthService necesita el USER_REPOSITORY
-    // que ese modulo exporta.
     UsersModule,
     // PassportModule habilita el sistema de "strategies" de Passport (usamos la de JWT).
     PassportModule,

@@ -41,14 +41,11 @@ export class AuthService {
   }
 
   async login(dto: LoginDto) {
-    // 1. Buscamos el usuario por email.
     const user = await this.userRepository.findByEmail(dto.email);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    // 2. Comparamos la contraseña enviada contra el hash guardado.
-    // bcrypt.compare se encarga de aplicar el mismo proceso de hash y comparar resultados.
     const passwordMatches = await bcrypt.compare(dto.password, user.password);
     if (!passwordMatches) {
       throw new UnauthorizedException('Invalid credentials');
@@ -63,7 +60,12 @@ export class AuthService {
     rol: RolesUser,
     nombre: string,
   ) {
-    const accessToken = this.jwtService.sign({ sub: userId, email });
+    const accessToken = this.jwtService.sign({
+      sub: userId,
+      email,
+      rol,
+      nombre,
+    });
     return {
       accessToken,
       user: { id: userId, email, rol, nombre },
