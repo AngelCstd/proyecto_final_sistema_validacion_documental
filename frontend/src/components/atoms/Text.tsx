@@ -2,11 +2,12 @@ import type { ElementType, HTMLAttributes } from "react";
 
 type TextVariant = "title" | "subtitle" | "paragraph" | "small";
 type TextSize = "sm" | "md" | "lg";
+type TextColor = "black" | "white" | "zinc";
 
 type TextProps = HTMLAttributes<HTMLElement> & {
   variant?: TextVariant;
   size?: TextSize;
-  /** Sobreescribe la etiqueta semántica que usa la variante por default (útil para SEO/jerarquía de encabezados). */
+  color?: TextColor;
   as?: ElementType;
 };
 
@@ -17,11 +18,18 @@ const defaultTagByVariant: Record<TextVariant, ElementType> = {
   small: "span",
 };
 
+// Solo el peso de la fuente — el color vive aparte en colorClasses.
 const variantClasses: Record<TextVariant, string> = {
-  title: "font-bold text-zinc-900 dark:text-zinc-50",
-  subtitle: "font-semibold text-zinc-800 dark:text-zinc-200",
-  paragraph: "font-normal text-zinc-700 dark:text-zinc-300",
-  small: "font-normal text-zinc-500 dark:text-zinc-400",
+  title: "font-bold",
+  subtitle: "font-semibold",
+  paragraph: "font-normal",
+  small: "font-normal",
+};
+
+const colorClasses: Record<TextColor, string> = {
+  black: "text-black",
+  white: "text-white",
+  zinc: "text-zinc-400",
 };
 
 const sizeClasses: Record<TextVariant, Record<TextSize, string>> = {
@@ -34,6 +42,7 @@ const sizeClasses: Record<TextVariant, Record<TextSize, string>> = {
 export function Text({
   variant = "paragraph",
   size = "md",
+  color = "black",
   as,
   className = "",
   ...props
@@ -42,7 +51,7 @@ export function Text({
 
   return (
     <Component
-      className={`${variantClasses[variant]} ${sizeClasses[variant][size]} ${className}`}
+      className={`${variantClasses[variant]} ${colorClasses[color]} ${sizeClasses[variant][size]} ${className}`}
       {...props}
     />
   );

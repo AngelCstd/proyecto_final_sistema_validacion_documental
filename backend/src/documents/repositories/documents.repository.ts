@@ -20,6 +20,7 @@ export interface UpdateDocumentData {
 }
 
 export interface IDocumentRepository {
+  findById(id: string): Promise<DocumentEntity | null>;
   findByFolio(folio: string): Promise<DocumentEntity | null>;
   create(data: CreateDocumentData): Promise<DocumentEntity>;
   update(id: string, data: UpdateDocumentData): Promise<DocumentEntity>;

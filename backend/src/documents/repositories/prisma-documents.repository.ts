@@ -15,6 +15,10 @@ export class PrismaDocumentsRepository implements IDocumentRepository {
     return this.prisma.document.findMany();
   }
 
+  findById(id: string): Promise<DocumentEntity | null> {
+    return this.prisma.document.findUnique({ where: { id } });
+  }
+
   findByFolio(folio: string): Promise<DocumentEntity | null> {
     return this.prisma.document.findUnique({ where: { folio } });
   }

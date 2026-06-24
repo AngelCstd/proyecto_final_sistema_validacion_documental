@@ -13,7 +13,7 @@ export function UserSummary() {
     <div className="flex w-full justify-between">
       <div>
         <Text>Sesión iniciada como</Text>
-        <Text variant="subtitle">{user.email}</Text>
+        <Text variant="subtitle">{user.nombre}</Text>
       </div>
       <div className="flex items-center">
         <Button onClick={logout}>Cerrar sesión</Button>

@@ -1,6 +1,10 @@
+export type RolesUser = "ADMIN" | "CAPTURISTA";
+
 export interface User {
   id: string;
   email: string;
+  rol: RolesUser;
+  nombre: string;
 }
 
 export interface AuthResponse {

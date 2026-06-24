@@ -55,6 +55,13 @@ export class DocumentsController {
     });
   }
 
+  // Protegida — detalle de un documento específico.
+  @UseGuards(JwtAuthGuard)
+  @Get(':id')
+  getById(@Param('id') id: string) {
+    return this.documentsService.getDocumentById(id);
+  }
+
   @UseGuards(JwtAuthGuard)
   @Get(':id/validations')
   getValidations(@Param('id') id: string) {

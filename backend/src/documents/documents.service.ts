@@ -80,6 +80,16 @@ export class DocumentsService {
     return this.documentRepository.findAll();
   }
 
+  async getDocumentById(id: string) {
+    const document = await this.documentRepository.findById(id);
+
+    if (!document) {
+      throw new NotFoundException('Documento no encontrado');
+    }
+
+    return document;
+  }
+
   async downloadDocument(folio: string) {
     const document = await this.documentRepository.findByFolio(folio);
 

@@ -1,12 +1,12 @@
 import { AuthLayout } from "@/components/templates/AuthLayout";
 import { ProtectedRoute } from "@/components/templates/ProtectedRoute";
-import { DashboardMenu } from "@/components/organisms/DashboardMenu";
+import { DocumentUploadForm } from "@/components/organisms/DocumentUploadForm";
 
-export default function DashboardPage() {
+export default function NewDocumentPage() {
   return (
     <ProtectedRoute>
       <AuthLayout>
-        <DashboardMenu />
+        <DocumentUploadForm />
       </AuthLayout>
     </ProtectedRoute>
   );

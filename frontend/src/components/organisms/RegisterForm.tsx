@@ -2,17 +2,24 @@
 
 import Link from "next/link";
 import { useRegisterForm } from "@/hooks/use-register-form";
-import { AuthCard } from "@/components/molecules/AuthCard";
+import { TitleCard } from "@/components/molecules/TitleCard";
 import { FormField } from "@/components/molecules/FormField";
 import { Button } from "@/components/atoms/Button";
 import { FieldError } from "@/components/atoms/FieldError";
 
 export function RegisterForm() {
-  const { email, setEmail, password, setPassword, error, isSubmitting, handleSubmit } =
-    useRegisterForm();
+  const {
+    email,
+    setEmail,
+    password,
+    setPassword,
+    error,
+    isSubmitting,
+    handleSubmit,
+  } = useRegisterForm();
 
   return (
-    <AuthCard title="Crea tu cuenta">
+    <TitleCard title="Crea tu cuenta">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <FormField
           id="email"
@@ -40,10 +47,13 @@ export function RegisterForm() {
       </form>
       <p className="mt-4 text-center text-sm text-zinc-600 dark:text-zinc-400">
         ¿Ya tienes cuenta?{" "}
-        <Link href="/login" className="font-medium text-zinc-900 underline dark:text-zinc-50">
+        <Link
+          href="/login"
+          className="font-medium text-zinc-900 underline dark:text-zinc-50"
+        >
           Inicia sesión
         </Link>
       </p>
-    </AuthCard>
+    </TitleCard>
   );
 }
