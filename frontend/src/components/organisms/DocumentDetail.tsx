@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
 import { useDocument } from "@/hooks/use-document";
 import { useUpdateDocumentEstado } from "@/hooks/use-update-document-estado";
 import {
@@ -26,6 +27,7 @@ const TABS: { id: Tab; label: string }[] = [
 ];
 
 export function DocumentDetail({ id }: { id: string }) {
+  const { user } = useAuth();
   const { document, isLoading, error, refresh } = useDocument(id);
   const [activeTab, setActiveTab] = useState<Tab>("info");
   const {
@@ -118,7 +120,7 @@ export function DocumentDetail({ id }: { id: string }) {
           </div>
           <DownloadDocumentButton folio={document.folio} />
 
-          {document.estado === "VIGENTE" ? (
+          {document.estado === "VIGENTE" && user?.rol === "ADMIN" ? (
             <div className="flex flex-col gap-2 border-t border-zinc-200 pt-3">
               <Text variant="small" size="sm">
                 Acciones
