@@ -3,6 +3,17 @@ dist
 
 /generated/prisma
 
-# Contenido subido por usuarios, vive solo dentro del volumen del contenedor
+# Contenido subido por usuarios, vive solo dentro del volumen del contenedor.
+# Hay que "abrir" cada subcarpeta explícitamente antes de poder rescatar
+# su .gitkeep — si excluyes la carpeta completa, Git ni siquiera entra
+# a mirar qué hay adentro, así que la excepción de abajo nunca aplicaría.
 uploads/*
-!uploads/**/.gitkeep
+!uploads/originals/
+!uploads/with-qr/
+!uploads/qr-images/
+uploads/originals/*
+uploads/with-qr/*
+uploads/qr-images/*
+!uploads/originals/.gitkeep
+!uploads/with-qr/.gitkeep
+!uploads/qr-images/.gitkeep
