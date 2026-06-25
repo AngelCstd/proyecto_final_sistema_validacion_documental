@@ -62,13 +62,17 @@ export class DocumentsController {
     return this.documentsService.getDocumentById(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // Protegida — solo ADMIN puede ver el historial de validaciones.
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(RolesUser.ADMIN)
   @Get(':id/validations')
   getValidations(@Param('id') id: string) {
     return this.documentsService.getValidations(id);
   }
 
-  @UseGuards(JwtAuthGuard)
+  // Protegida — solo ADMIN puede ver la bitácora.
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(RolesUser.ADMIN)
   @Get(':id/bitacora')
   getBitacora(@Param('id') id: string) {
     return this.documentsService.getBitacora(id);

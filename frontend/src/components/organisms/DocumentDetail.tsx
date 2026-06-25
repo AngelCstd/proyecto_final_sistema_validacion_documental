@@ -28,6 +28,8 @@ const TABS: { id: Tab; label: string }[] = [
 
 export function DocumentDetail({ id }: { id: string }) {
   const { user } = useAuth();
+  const isAdmin = user?.rol === "ADMIN";
+  const visibleTabs = isAdmin ? TABS : TABS.filter((tab) => tab.id === "info");
   const { document, isLoading, error, refresh } = useDocument(id);
   const [activeTab, setActiveTab] = useState<Tab>("info");
   const {
@@ -60,7 +62,7 @@ export function DocumentDetail({ id }: { id: string }) {
       </div>
 
       <div className="flex gap-2 border-b border-zinc-300">
-        {TABS.map((tab) => (
+        {visibleTabs.map((tab) => (
           <Button
             key={tab.id}
             type="button"
@@ -153,11 +155,11 @@ export function DocumentDetail({ id }: { id: string }) {
         </div>
       ) : null}
 
-      {activeTab === "validaciones" ? (
+      {activeTab === "validaciones" && isAdmin ? (
         <DocumentValidationsList documentId={document.id} />
       ) : null}
 
-      {activeTab === "bitacora" ? (
+      {activeTab === "bitacora" && isAdmin ? (
         <DocumentBitacoraList documentId={document.id} />
       ) : null}
     </div>
